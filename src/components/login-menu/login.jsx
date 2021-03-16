@@ -1,13 +1,40 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useLogin } from '../../hooks/login.hook.js';
 
 const Login = () => {
+    const [isShownPass, setIsShownPass] = useState(false);
+    const {
+        form,
+        formError,
+        isLoading,
+        request,
+        handleChangeForm,
+    } = useLogin();
+
+    const handleChangeShown = (isShow) => {
+        setIsShownPass(!isShow)
+    }
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        request();
+    }
+
+    const checkError = (error) => {
+        if (error) {
+            return 'is-invalid'
+        } else {
+            return ''
+        }
+    }
+
     return (
         <>
             <h3 className='mb-3'>
                 Вход
             </h3>
-            <form>
+            <form onSubmit={onSubmit}>
                 <div className='mb-3'>
                     <label
                         className='form-label'
@@ -16,13 +43,16 @@ const Login = () => {
                         Email
                     </label>
                     <input
+                        value={form.email}
+                        onChange={handleChangeForm}
+                        name='email'
                         type='email'
-                        className='form-control'
+                        className={`form-control ${checkError(formError)}`}
                         id='emailInput'
                         placeholder='Введите email'
+                        aria-describedby='passwordHelpBlock'
                     />
                     <div>
-
                     </div>
                 </div>
                 <div className='mb-3'>
@@ -33,11 +63,31 @@ const Login = () => {
                         Пароль
                     </label>
                     <input
-                        type='password'
-                        className='form-control'
+                        value={form.password}
+                        onChange={handleChangeForm}
+                        type={isShownPass ? 'text' : 'password'}
+                        name='password'
+                        className={`form-control ${checkError(formError)}`}
                         id='passInput'
                         placeholder='Введите пароль'
+                        aria-describedby='passwordHelpBlock'
                     />
+                    <div id="passwordHelpBlock"
+                        className={`form-text mb-3 ${formError && 'invalid-message'}`}>
+                        {formError ? formError : ''}
+                    </div>
+                    <div className='form-check mb-3'>
+                        <input
+                            onChange={() => { handleChangeShown(isShownPass) }}
+                            className='form-check-input'
+                            type='checkbox'
+                            id='showCheckboxInput' />
+                        <label
+                            className='form-check-label'
+                            htmlFor='showCheckboxInput'>
+                            Показать пароль
+                    </label>
+                    </div>
                 </div>
                 <div className='mb-3'>
                     <Link to='/foget_password'>
@@ -45,6 +95,7 @@ const Login = () => {
                     </Link>
                 </div>
                 <button
+                    disabled={isLoading}
                     type='submit'
                     className='btn btn-outline-primary w-100'
                 >

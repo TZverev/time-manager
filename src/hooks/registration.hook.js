@@ -1,13 +1,14 @@
 import { useState, useCallback } from "react";
 import { createUser, errorInfo } from '../firebase/createUser.js';
 
-const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export const useRegistration = () => {
-    const [email, setEmail] = useState('')
-    const [passwords, setPasswords] = useState({ firstPassInput: '', secondPassInput: '' })
+    const [email, setEmail] = useState('');
+    const [passwords, setPasswords] = useState({ firstPassInput: '', secondPassInput: '' });
     const [passError, setPassError] = useState(null);
-    const [emailError, setEmailError] = useState(null)
+    const [emailError, setEmailError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const changePassHandler = (event) => {
         setPasswords({
@@ -56,9 +57,11 @@ export const useRegistration = () => {
         if (!isEmailError || !isPassError) {
             return
         }
+        setIsLoading(true);
         try {
             const userCredential = await createUser(email, passwords.firstPassInput)
-            console.log(userCredential.user)
+            console.log(userCredential.user);
+            setIsLoading(false);
         } catch (error) {
             let err = errorInfo(error);
             if (err.type === 'emailError') {
@@ -69,9 +72,8 @@ export const useRegistration = () => {
                 } else {
                     setPassError(`${err.type} : ${err.message}`)
                 }
+            setIsLoading(false);
         }
-
-
     }, [email, passwords, passError, emailError])
 
     return ({
@@ -79,6 +81,7 @@ export const useRegistration = () => {
         passwords,
         passError,
         emailError,
+        isLoading,
         changePassHandler,
         changeEmailHandler,
         request,

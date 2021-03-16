@@ -21,7 +21,7 @@ const FogetPassword = () => {
                         placeholder='Введите email'
                         aria-describedby="fogetEmailHelpBlock" />
                     <div id="fogetEmailHelpBlock"
-                        class="form-text">
+                        className="form-text">
                         На вашу почту будет отправлено письмо для смены пароля.
                     </div>
                 </div>

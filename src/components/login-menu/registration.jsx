@@ -11,6 +11,7 @@ const Registration = () => {
         passwords,
         passError,
         emailError,
+        isLoading,
         changePassHandler,
         changeEmailHandler,
         request,
@@ -55,9 +56,10 @@ const Registration = () => {
                         id='validationEmail'
                         type='email'
                         placeholder='Введите email'
+                        aria-describedby='emailHelpBlock'
                         required
                     />
-                    <div id="passwordHelpBlock" className="form-text invalid-feedback mb-3">
+                    <div id="emailHelpBlock" className="form-text invalid-feedback mb-3">
                         {emailError ? emailError : ''}
                     </div>
                 </div>
@@ -77,6 +79,7 @@ const Registration = () => {
                             id='validationFirstPass'
                             type={isShownPass ? 'text' : 'password'}
                             placeholder='Введите пароль'
+                            aria-describedby='passwordHelpBlock'
                             required
                         />
                     </div>
@@ -94,6 +97,7 @@ const Registration = () => {
                             id='validationSecondPass'
                             type={isShownPass ? 'text' : 'password'}
                             placeholder='Повторите пароль'
+                            aria-describedby='passwordHelpBlock'
                             required={true}
                         />
                     </div>
@@ -116,6 +120,7 @@ const Registration = () => {
                 </div>
                 <div className='mt-3'>
                     <button
+                        disabled={isLoading}
                         type='submit'
                         className='btn btn-outline-primary w-100'
                     >
