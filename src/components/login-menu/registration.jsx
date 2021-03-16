@@ -98,7 +98,7 @@ const Registration = () => {
                             type={isShownPass ? 'text' : 'password'}
                             placeholder='Повторите пароль'
                             aria-describedby='passwordHelpBlock'
-                            required={true}
+                            required
                         />
                     </div>
                 </div>

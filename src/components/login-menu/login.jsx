@@ -44,7 +44,7 @@ const Login = () => {
                     </label>
                     <input
                         value={form.email}
-                        onChange={handleChangeForm}
+                        onChange={(e) => { handleChangeForm(e) }}
                         name='email'
                         type='email'
                         className={`form-control ${checkError(formError)}`}
@@ -64,7 +64,7 @@ const Login = () => {
                     </label>
                     <input
                         value={form.password}
-                        onChange={handleChangeForm}
+                        onChange={(e) => { handleChangeForm(e) }}
                         type={isShownPass ? 'text' : 'password'}
                         name='password'
                         className={`form-control ${checkError(formError)}`}
