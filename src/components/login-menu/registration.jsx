@@ -1,57 +1,118 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useRegistration } from '../../hooks/registration.hook';
 
 
 const Registration = () => {
+
+    const [isShownPass, setIsShownPass] = useState(false);
+    const {
+        email,
+        passwords,
+        passError,
+        emailError,
+        changePassHandler,
+        changeEmailHandler,
+        request,
+    } = useRegistration();
+
+    const checkError = (error) => {
+        if (error) {
+            return 'is-invalid'
+        } else {
+            return ''
+        }
+    }
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        request()
+    }
+
+    const handleChangeShown = (isShow) => {
+        setIsShownPass(!isShow)
+    }
+
     return (
         <>
             <h3 className='mb-3'>
                 Регистрация
             </h3>
-            <form className='needs-validation' noValidate>
-                <div className='mb-3'>
+            <form
+                onSubmit={onSubmit}
+                noValidate>
+                <div className=' mb-3'>
                     <label
                         className='form-label'
                         htmlFor='validationEmail'>
                         Email
-                </label>
+                    </label>
                     <input
-                        className='form-control'
+                        onChange={changeEmailHandler}
+                        name='email'
+                        value={email}
+                        className={`form-control ${checkError(emailError)}`}
                         id='validationEmail'
                         type='email'
                         placeholder='Введите email'
                         required
                     />
+                    <div id="passwordHelpBlock" className="form-text invalid-feedback mb-3">
+                        {emailError ? emailError : ''}
+                    </div>
                 </div>
+
                 <div className='row'>
-                    <div className='form-group col-sm-6 mb-3'>
+                    <div className='form-group col-sm-6'>
                         <label
                             className='form-label'
                             htmlFor='validationFirstPass'>
                             Пароль
-                    </label>
+                        </label>
                         <input
-                            className='form-control'
+                            onChange={changePassHandler}
+                            name='firstPassInput'
+                            value={passwords.firstPassInput}
+                            className={`form-control ${checkError(passError)}`}
                             id='validationFirstPass'
-                            type='password'
+                            type={isShownPass ? 'text' : 'password'}
                             placeholder='Введите пароль'
                             required
                         />
                     </div>
-                    <div className='form-group col-sm-6 mb-3'>
+                    <div className='form-group col-sm-6'>
                         <label
                             className='form-label'
                             htmlFor='validationSecondPass'>
                             Повторите пароль
                      </label>
                         <input
-                            className='form-control'
+                            onChange={changePassHandler}
+                            name='secondPassInput'
+                            value={passwords.secondPassInput}
+                            className={`form-control ${checkError(passError)}`}
                             id='validationSecondPass'
-                            type='password'
+                            type={isShownPass ? 'text' : 'password'}
                             placeholder='Повторите пароль'
-                            required
+                            required={true}
                         />
                     </div>
+                </div>
+                <div id="passwordHelpBlock"
+                    className={`form-text mb-3 ${passError && 'invalid-message'}`}>
+                    {passError ? passError : 'Пароль должен быть длиннее 8 символов.'}
+                </div>
+                <div className='form-check mb-3'>
+                    <input
+                        onChange={() => { handleChangeShown(isShownPass) }}
+                        className='form-check-input'
+                        type='checkbox'
+                        id='showCheckboxInput' />
+                    <label
+                        className='form-check-label'
+                        htmlFor='showCheckboxInput'>
+                        Показать пароль
+                    </label>
                 </div>
                 <div className='mt-3'>
                     <button
@@ -66,7 +127,6 @@ const Registration = () => {
                         Вход
                     </Link>
                 </div>
-
             </form>
         </>
     )

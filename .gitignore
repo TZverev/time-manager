@@ -7,6 +7,7 @@
 /.idea
 build.rar
 /dist
+firebase.js
 
 # testing
 /coverage
