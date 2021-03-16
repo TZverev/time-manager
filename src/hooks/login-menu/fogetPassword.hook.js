@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { fogetPass, errorInfo } from '../firebase/fogetPass.js';
+import { fogetPass, errorInfo } from '@/firebase/fogetPass.js';
 
 
 export const usefogetPassword = () => {

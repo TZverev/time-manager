@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { usefogetPassword } from '../../hooks/fogetPassword.hook.js';
+import { usefogetPassword } from '@/hooks/login-menu/fogetPassword.hook.js';
 
 const FogetPassword = () => {
     const {

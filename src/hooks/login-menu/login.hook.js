@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { loginUser, errorInfo } from '../firebase/loginUser.js';
+import { loginUser, errorInfo } from '@/firebase/loginUser.js';
 
 export const useLogin = () => {
 

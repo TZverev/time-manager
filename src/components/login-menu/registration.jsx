@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useRegistration } from '../../hooks/registration.hook';
+import { useRegistration } from '@/hooks/login-menu/registration.hook';
 
 
 const Registration = () => {

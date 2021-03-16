@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useLogin } from '../../hooks/login.hook.js';
+import { useLogin } from '@/hooks/login-menu/login.hook.js';
 
 const Login = () => {
     const [isShownPass, setIsShownPass] = useState(false);

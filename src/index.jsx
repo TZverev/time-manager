@@ -5,10 +5,6 @@ import './styles/scss/styles.scss'
 import 'bootstrap';
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    Redirect
 } from "react-router-dom";
 
 const App = () => {
