@@ -120,6 +120,7 @@ const Registration = () => {
                 </div>
                 <div className='mt-3'>
                     <button
+                        aria-disabled={isLoading}
                         disabled={isLoading}
                         type='submit'
                         className='btn btn-outline-primary w-100'

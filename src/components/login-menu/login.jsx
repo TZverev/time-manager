@@ -95,6 +95,7 @@ const Login = () => {
                     </Link>
                 </div>
                 <button
+                    aria-disabled={isLoading}
                     disabled={isLoading}
                     type='submit'
                     className='btn btn-outline-primary w-100'
