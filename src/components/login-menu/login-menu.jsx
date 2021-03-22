@@ -7,7 +7,7 @@ import FogetPassword from './foget-password.jsx'
 const LoginMenu = () => {
     return (
         <div className='mt-5 d-flex justify-content-center'>
-            <div className='logIn-container border p-4 bg-light'>
+            <div className='logIn-container border p-4 bg-white'>
                 <Switch>
                     <Route path='/login'>
                         <Login />

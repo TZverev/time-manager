@@ -32,7 +32,10 @@ const Navigation = ({ state, children }) => {
                     Выход
             </button>
             </div>
-            {children}
+            <div className='m-3 p-4 bg-white border rounded content-contanier'>
+                {children}
+            </div>
+
         </>
     )
 }

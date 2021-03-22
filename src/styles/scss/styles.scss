@@ -1,5 +1,15 @@
 @import "~bootstrap/scss/bootstrap";
 
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+);
 
 .logIn{
     &-container{
@@ -12,4 +22,56 @@
     margin-top: 0.25rem;
     font-size: 0.875em;
     color: #dc3545;
+}
+
+body {
+    background-color: $light;
+}
+
+.content-contanier {
+    width: 100%;
+}
+
+.activity-color-wrapper {
+    height: 20px;
+    width: 20px;
+}
+
+.btn-i {
+    background-color: initial;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @each $theme, $color in $theme-colors {
+        &.btn-i-#{$theme} {
+            &:hover, &:focus {
+                color: $color,
+            }
+        }
+    }
+}
+
+.btn-color {
+    border-color: $gray-500 !important;
+    &:hover{
+        background-color: $gray-200;
+    }
+}
+
+.choose-color {
+    z-index: 99;
+    width: 400px;
+    background-color: $white;
+    position:absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .color-block {
+        height: 30px;
+        width: 100%;
+    }
+    .input-wrapper {
+        width: 100%;
+    }
 }
