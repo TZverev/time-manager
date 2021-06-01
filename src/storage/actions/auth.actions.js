@@ -1,6 +1,7 @@
-export const LOG_IN = () => {
+export const LOG_IN = (user) => {
     return {
-        type: 'LOG_IN'
+        type: 'LOG_IN',
+        user: user
     }
 }
 

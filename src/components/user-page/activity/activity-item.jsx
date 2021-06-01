@@ -1,45 +1,121 @@
-import React, { useState } from 'react';
-import { PencilSVG, BucketSVG } from '@/components/features/icons.jsx';
-import ChooseColor from '@/components/features/choose-color.jsx';
+import React from 'react';
+import useChangeActivity from '@/hooks/user-page/change-activity.hook.js';
+import { setActivityFB, deleteActivityFB } from '@/firebase/activitys.js';
+import { BucketSVG, PencilSVG, CheckSVG, XSVG } from '@/components/features/icons.jsx';
+import { connect } from 'react-redux';
+import { checkError } from '@/features/check-error.js';
 
-const ActivityItem = ({ item, onDeleteActivity }) => {
+const ActivityItem = ({ item, onDelete, onChangeActivity, activityes, userId }) => {
+    const {
+        isСhanging,
+        setIsChanging,
+        color,
+        name,
+        handleChangeColor,
+        handleChangeName,
+        cancelChanging,
+        activity,
+        error,
+        setError,
+    } = useChangeActivity(item);
 
-    const [color, setColor] = useState(item.color)
-
-    const [isColorSettings, setIsColorSettings] = useState(false);
-
-    const showColorSettings = (state) => {
-        setIsColorSettings(!state)
+    const onSubmit = (e) => {
+        e.preventDefault()
+        if (name === '') {
+            setError('Введите название активности.')
+            return
+        } else if (activityes.find(item => item.activity === name) && item.activity !== name) {
+            setError('Такая активность уже есть.')
+            return
+        }
+        try {
+            setActivityFB(userId, activity)
+        } catch (err) {
+            setError(err)
+        }
+        onChangeActivity(activity, userId)
+        setIsChanging(false)
     }
+
+    const onDeleteActiviy = () => {
+        try {
+            deleteActivityFB(userId, activity)
+            onDelete(item, userId)
+        } catch {
+            setError(err)
+        }
+    }
+
     return (
-        <div className='d-flex justify-content-between rounded border mt-3 p-2'>
-            <div className='d-flex align-items-center'>
-                <div>
-                    <button onClick={() => { showColorSettings(isColorSettings) }}
-                        className='activity-color-wrapper border rounded'
-                        style={{ backgroundColor: `rgb(${item.color.r},${item.color.g},${item.color.b})` }}
-                        aria-label='Поменять цевт активности' />
-                    {isColorSettings &&
-                        <ChooseColor color={color} onChangeColor={setColor} />
-                    }
-                </div>
-                <div className='ms-3'>
-                    {item.activity}
-                </div>
-            </div>
-            <div className='d-flex align-items-center'>
-                <button className='btn-i btn-i-primary'
-                    aria-label='Изменить активность'>
+        <form className='input-group mt-3'
+            onSubmit={(e) => { onSubmit(e) }}>
+            <input
+                disabled={!isСhanging}
+                onChange={(e) => { handleChangeColor(e) }}
+                type="color"
+                className="form-control form-control-color"
+                id="exampleColorInput"
+                value={color}
+                title="Choose your color" />
+            <input
+                className={`form-control ${checkError(error)}`}
+                onChange={(e) => { handleChangeName(e) }}
+                type='text'
+                disabled={!isСhanging}
+                value={name} />
+            {isСhanging ?
+                <>
+                    <button className='btn btn-outline-success'
+                        type='submit'
+                        aria-label='Сохранить изменения'>
+                        <CheckSVG />
+                    </button>
+                    <button className='btn btn-outline-secondary'
+                        type='button'
+                        aria-label='Отменить изменения'
+                        onClick={cancelChanging}>
+                        <XSVG />
+                    </button>
+                </>
+                :
+                <button className='btn btn-outline-secondary'
+                    type='button'
+                    aria-label={'Изменить активность' + item.activity}
+                    onClick={() => { setIsChanging(true) }}>
                     <PencilSVG />
                 </button>
-                <button className='btn-i btn-i-danger'
-                    aria-label='Удалить активность'
-                    onClick={() => { onDeleteActivity(item) }}>
-                    <BucketSVG />
-                </button>
+            }
+            <button className='btn btn-outline-danger'
+                onClick={onDeleteActiviy}
+                type='button'
+                aria-label={'Удалить активность' + item.activity}>
+                <BucketSVG />
+            </button>
+            <div className='invalid-feedback'
+                id='inputError'>
+                {error}
             </div>
-        </div>
+        </form>
     )
 }
 
-export default ActivityItem;
+export default connect(
+    state => ({
+        activityes: state.activityReducer.state,
+        userId: state.user.userId
+    }),
+    dispatch => ({
+        onChangeActivity: (activity) => {
+            dispatch({
+                type: 'CHANGE_ACTIVITY',
+                activity: activity
+            })
+        },
+        onDelete: (activity) => {
+            dispatch({
+                type: 'DELETE_ACTIVITY',
+                activity: activity
+            })
+        }
+    })
+)(ActivityItem);

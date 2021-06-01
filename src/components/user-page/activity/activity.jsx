@@ -1,52 +1,58 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import ActivityItem from './activity-item.jsx';
 import AddActivity from './add-activity.jsx';
-import { PlusCircleSVG } from '@/components/features/icons.jsx';
+import { getActivityesFB } from '@/firebase/activitys.js';
 
 
-const Activity = (props) => {
-    const [isAddition, setIsAddition] = useState(false);
-
+const Activity = ({ actyvityes, id, onLoad, isLoading }) => {
+    const loading = async (userId) => {
+        const response = await getActivityesFB(userId)
+        onLoad(response.docs.map((doc) => doc.data()))
+    }
+    useEffect(() => {
+        try {
+            loading(id)
+        } catch (err) {
+            console.log(err)
+        }
+    }, [])
     return (
         <div className='activity'>
             <h2>
                 Активности
             </h2>
             <hr />
-            <div className='mt-3 mb-3'>
-                {isAddition ?
-                    <AddActivity close={() => { setIsAddition(false) }} />
-                    :
-                    <button className='btn btn-outline-primary d-flex align-items-center'
-                        onClick={() => { setIsAddition(true) }}>
-                        <PlusCircleSVG />
-                        <span className='ms-2'>
-                            Добавить активность
-                        </span>
-                    </button>}
-                <div>
-                    {props.actyvityes.map((item) => {
+            {isLoading ?
+                <div className='d-flex justify-content-center'>
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                :
+                <div className='mt-3 mb-3'>
+                    <AddActivity />
+                    {actyvityes.map((item) => {
                         return <ActivityItem
                             key={item.id}
-                            item={item}
-                            onDeleteActivity={props.onDeleteActivity} />
+                            item={item} />
                     })}
-                </div>
-            </div>
+                </div>}
         </div>
     )
 }
 
 export default connect(
     state => ({
-        actyvityes: state.activityReducer
+        actyvityes: state.activityReducer.state,
+        id: state.user.userId,
+        isLoading: state.activityReducer.isLoading
     }),
     dispatch => ({
-        onDeleteActivity: (activity) => {
+        onLoad: (activitys) => {
             dispatch({
-                type: 'DELETE_ACTIVITY',
-                activity: activity
+                type: 'LOAD_ACTIVITYES',
+                activitys: activitys
             })
         }
     })
