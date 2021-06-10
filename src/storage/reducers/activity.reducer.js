@@ -5,7 +5,7 @@ const initialState = {
     error: null
 }
 
-const activityReducer = (state = initialState, action) => {
+const activityState = (state = initialState, action) => {
     if (action.type === 'ADD_ACTIVITY') {
         return {
             isLoading: false,
@@ -39,4 +39,4 @@ const activityReducer = (state = initialState, action) => {
     return state
 }
 
-export default activityReducer;
+export default activityState;

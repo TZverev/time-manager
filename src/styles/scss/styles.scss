@@ -79,3 +79,29 @@ body {
 .loading {
     height: 100vh;
 }
+
+.schedule-card {
+    min-width: 70%;
+}
+
+.ta-center {
+    text-align: center;
+}
+
+.mytooltip {
+    position: absolute;
+    z-index: 999;
+}
+
+.activityProcess {
+    height: 0.3rem;
+    width: 100%;
+    border-radius: 3px;
+    border:  $secondary 1px solid ;
+    margin-top: 1px;
+}
+
+.btn-time{
+    background-color: #fff;
+    border: $gray-300 solid 1px
+}

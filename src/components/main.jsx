@@ -20,7 +20,10 @@ const Main = (props) => {
     return (
         <>
             {props.isLoading ?
-                <Loading />
+                <div className='loading'>
+                    <Loading />
+                </div>
+
                 :
                 <>
                     {props.isAuth ?
@@ -35,8 +38,8 @@ const Main = (props) => {
 
 export default connect(
     state => ({
-        isLoading: state.user.isLoading,
-        isAuth: state.user.isAuthenticated
+        isLoading: state.userState.isLoading,
+        isAuth: state.userState.isAuthenticated
     }),
     dispatch => ({})
 )(Main);

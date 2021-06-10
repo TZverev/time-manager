@@ -14,7 +14,7 @@ const Activity = ({ actyvityes, id, onLoad, isLoading }) => {
         try {
             loading(id)
         } catch (err) {
-            console.log(err)
+            console.log('Ошибка при загрузке' + err)
         }
     }, [])
     return (
@@ -44,9 +44,9 @@ const Activity = ({ actyvityes, id, onLoad, isLoading }) => {
 
 export default connect(
     state => ({
-        actyvityes: state.activityReducer.state,
-        id: state.user.userId,
-        isLoading: state.activityReducer.isLoading
+        actyvityes: state.activityState.state,
+        id: state.userState.userId,
+        isLoading: state.activityState.isLoading
     }),
     dispatch => ({
         onLoad: (activitys) => {

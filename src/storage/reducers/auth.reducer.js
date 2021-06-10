@@ -13,7 +13,7 @@ const initialState = () => {
         }
     }
 }
-const user = (state = initialState(), action) => {
+const userState = (state = initialState(), action) => {
     if (action.type === 'LOG_IN') {
         localStorage.setItem('isAuth', true)
         return {
@@ -32,4 +32,4 @@ const user = (state = initialState(), action) => {
     return state
 }
 
-export default user;
+export default userState;

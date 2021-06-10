@@ -1,5 +1,5 @@
 import React from 'react';
-import useChangeActivity from '@/hooks/user-page/change-activity.hook.js';
+import useChangeActivity from '@/hooks/user-page/activitys/change-activity.hook.js';
 import { setActivityFB, deleteActivityFB } from '@/firebase/activitys.js';
 import { BucketSVG, PencilSVG, CheckSVG, XSVG } from '@/components/features/icons.jsx';
 import { connect } from 'react-redux';
@@ -101,8 +101,8 @@ const ActivityItem = ({ item, onDelete, onChangeActivity, activityes, userId }) 
 
 export default connect(
     state => ({
-        activityes: state.activityReducer.state,
-        userId: state.user.userId
+        activityes: state.activityState.state,
+        userId: state.userState.userId
     }),
     dispatch => ({
         onChangeActivity: (activity) => {

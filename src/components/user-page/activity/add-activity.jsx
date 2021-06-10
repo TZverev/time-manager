@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import useAddActivity from '@/hooks/user-page/add-activity.hook.js';
+import useAddActivity from '@/hooks/user-page/activitys/add-activity.hook.js';
 import { checkError } from '@/features/check-error.js';
 import { PlusCircleSVG } from '@/components/features/icons.jsx';
 import { setActivityFB } from '@/firebase/activitys.js';
@@ -12,17 +12,6 @@ const AddActivity = ({ onAddActivity, userId, actyvityes }) => {
     const onChangeInput = (event) => {
         setError(null);
         setName(event.target.value)
-    }
-    const activityNameCheck = (name) => {
-        if (!name) {
-            setError('Введите название активности.')
-            return true
-        }
-        if (actyvityes.find(item => item.activity === name)) {
-            setError('Активность с таким названием уже существует.')
-            return true
-        }
-        return false
     }
     const onClose = () => {
         setError('')
@@ -87,7 +76,7 @@ const AddActivity = ({ onAddActivity, userId, actyvityes }) => {
                     onClick={() => { setIsAddition(true) }}>
                     <PlusCircleSVG />
                     <span className='ms-2'>
-                        Добавить активность
+                        Создать новую активность
                     </span>
                 </button>}
         </>
@@ -96,8 +85,8 @@ const AddActivity = ({ onAddActivity, userId, actyvityes }) => {
 
 export default connect(
     state => ({
-        userId: state.user.userId,
-        actyvityes: state.activityReducer.state
+        userId: state.userState.userId,
+        actyvityes: state.activityState.state
     }),
     dispatch => ({
         onAddActivity: (activity) => {

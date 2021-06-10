@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
-import Schedule from './schedule.jsx';
+import Schedule from './schedule/schedule.jsx';
 import Settings from './settings.jsx';
 import Activity from './activity/activity.jsx';
 import Navigation from './navigation.jsx';

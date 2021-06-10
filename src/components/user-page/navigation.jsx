@@ -7,7 +7,7 @@ const Navigation = ({ state, children }) => {
         try {
             await firebase.auth().signOut()
         } catch (error) {
-            console.log(error)
+            console.log('Ошибка при загрузке ' + error)
         }
     }
     return (
