@@ -2,26 +2,30 @@ import React, { useState, useRef } from 'react';
 import useScheduleCardItem from '@/hooks/user-page/schedule/schedule-card-item.hook.js';
 import ScheduleCardSettings from './settings.jsx';
 import ScheduleItemLoading from './loading.jsx';
+import ScheduleItemButtons from './schedule-item-buttons.jsx';
 
 const ScheduleCardItem = ({ item }) => {
     const {
-        beginning,
-        setBeginning,
-        end,
-        setEnd,
-        color,
-        setColor,
-        name,
-        setName,
+        beginning, modSetBeginning, setBeginning,
+        end, modSetEnd, setEnd,
+        color, setColor,
+        name, setName,
     } = useScheduleCardItem(item);
     const settingsButton = useRef(null);
-    const [isСhanging, setIsChanging] = useState(true);
-    const [isSettings, setIsSettings] = useState(false);
+    const [isСhanging, toggleChanging] = useState(false);
+    const [isSettings, toggleSettings] = useState(false);
     const [settingsPos, setSettingsPos] = useState(0);
 
-    const handleClick = () => {
+    const handleToggleSettings = () => {
         setSettingsPos(settingsButton.current.clientHeight + 5)
-        setIsSettings((isСhanging) => { return !isСhanging })
+        toggleSettings((isСhanging) => { return !isСhanging })
+    }
+    const handleCancelChanging = () => {
+        modSetBeginning(item.a);
+        modSetEnd(item.b);
+        setName(item.name);
+        setColor(item.color);
+        toggleChanging(false);
     }
     return (
         <>
@@ -29,7 +33,7 @@ const ScheduleCardItem = ({ item }) => {
                 <button className='btn btn-outline-secondary btn-time'
                     disabled={!isСhanging}
                     ref={settingsButton}
-                    onClick={handleClick}
+                    onClick={handleToggleSettings}
                     type='button'>
                     {beginning + '-' + end}
                 </button>
@@ -53,6 +57,12 @@ const ScheduleCardItem = ({ item }) => {
                     type='text'
                     className='form-control pl-3'
                     value={name}
+                />
+                <ScheduleItemButtons
+                    isСhanging={isСhanging} toggleChanging={toggleChanging}
+                    name={name}
+                    cancelChanging={handleCancelChanging}
+                //onDelete={}
                 />
             </form >
             <ScheduleItemLoading data={item} />

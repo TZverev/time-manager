@@ -7,16 +7,11 @@ import { checkError } from '@/features/check-error.js';
 
 const ActivityItem = ({ item, onDelete, onChangeActivity, activityes, userId }) => {
     const {
-        isСhanging,
-        setIsChanging,
-        color,
-        name,
-        handleChangeColor,
-        handleChangeName,
-        cancelChanging,
+        isСhanging, setIsChanging, cancelChanging,
+        color, handleChangeColor,
+        name, handleChangeName,
         activity,
-        error,
-        setError,
+        error, setError,
     } = useChangeActivity(item);
 
     const onSubmit = (e) => {

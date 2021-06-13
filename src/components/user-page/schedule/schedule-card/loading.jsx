@@ -1,20 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const ScheduleItemLoading = ({ data }) => {
-    const [time, setTime] = useState(new Date());
+    const [time, setTime] = useState(Date.now());
     const [percent, setPercent] = useState();
     const timer = useRef(null)
 
     const activeTimer = () => {
-        if (time < data.a) {
-            setTimer(setTimeout(activeTimer, data.a - time))
+        setTime(Date.now())
+        if (Date.now() < data.a) {
+            timer.current = setTimeout(activeTimer, data.a - Date.now())
             return
         }
-        if (time > data.b) {
+        if (Date.now() > data.b) {
             return
         }
-        setTime(new Date())
-        timer.current = setTimeout(activeTimer, (data.b - data.a) / 20)
+        timer.current = setTimeout(activeTimer, (data.b - data.a) / 100)
     }
     const calculate = () => {
         let result = (time - data.a) / ((data.b - data.a) / 100)

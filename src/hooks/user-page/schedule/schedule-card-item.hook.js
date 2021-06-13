@@ -17,15 +17,14 @@ const useScheduleCardItem = (item) => {
     const [color, setColor] = useState(item.color);
     const [name, setName] = useState(item.name);
 
+    const modSetBeginning = (time) => setBeginning(transformTime(time));
+    const modSetEnd = (time) => setEnd(transformTime(time));
+
     return {
-        beginning,
-        setBeginning,
-        end,
-        setEnd,
-        color,
-        setColor,
-        name,
-        setName,
+        beginning, modSetBeginning, setBeginning,
+        end, modSetEnd, setEnd,
+        color, setColor,
+        name, setName,
     }
 }
 

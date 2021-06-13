@@ -8,3 +8,10 @@ export const getScheduleFB = async (id, date) => {
         .get()
 }
 
+export const addScheduleFB = async (id, data) => {
+    return await db.collection('users')
+        .doc(id)
+        .collection('schedule')
+        .doc(data.date)
+        .set(data)
+}
