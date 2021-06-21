@@ -19,13 +19,13 @@ const loadSchedule = async (id, date) => {
         } else {
             store.dispatch({
                 type: 'LOAD_SCHEDULE_NO_DATA',
-                data: { date: date }
+                data: { date: date, schedule: null }
             })
         }
     } catch (err) {
         console.log(err)
         store.dispatch({
-            type: 'LOAD_SCHEDULE_ERROR',
+            type: 'ACTION_SCHEDULE_ERROR',
             error: err
         })
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import ScheduleCardItem from './schedule-card-item.jsx';
 
-const ScheduleCardBody = ({ data }) => {
+const ScheduleCardBody = ({ data, isChanging }) => {
     const compare = (first, second) => {
         if (first.a > second.a) return 1;
         if (first.a === second.a) return 0;
@@ -9,11 +9,14 @@ const ScheduleCardBody = ({ data }) => {
     }
     return (
         <>
-            {(data && data.schedule) ?
+            {(data && data.schedule && data.schedule.length) ?
                 <div>
                     {data.schedule.sort(compare).map(item => {
                         return (
-                            <ScheduleCardItem key={item.a + item.name} item={item} />
+                            <ScheduleCardItem key={item.id}
+                                item={item}
+                                date={data.date}
+                                isChangingCard={isChanging} />
                         )
                     })}
                 </div>

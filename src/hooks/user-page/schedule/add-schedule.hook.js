@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import setRandomColor from '@/features/random-color.js';
 import addSchedule from '@/storage/functions/schedule/add-schedule.js';
+import timeConverter from '@/features/timeconverter.js';
 
 const useAddSchedule = (date, userId) => {
     const [beginning, setBeginnging] = useState('')
@@ -8,24 +9,16 @@ const useAddSchedule = (date, userId) => {
     const [color, setColor] = useState(setRandomColor());
     const [name, setName] = useState('');
     const [error, setError] = useState({});
-    const [schedule, setSchedule] = useState({});
-
-    function time(str, day) {
-        if (!str) {
-            return
-        }
-        let hour = +str.match(/^..(?=:)/)
-        let minutes = +str.match(/(?<=:)..$/)
-        return new Date(day).setHours(hour, minutes, 0, 0)
-    }
+    const [schedule, setSchedule] = useState({})
 
     useEffect(() => {
         setError({})
         setSchedule({
-            a: time(beginning, date),
-            b: time(end, date),
+            a: timeConverter(beginning, date),
+            b: timeConverter(end, date),
             color: color,
             name: name,
+            id: Date.now()
         })
     }, [beginning, end, color, name])
 

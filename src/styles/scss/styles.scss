@@ -1,5 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
 
+
 $theme-colors: (
   "primary":    $primary,
   "secondary":  $secondary,
@@ -10,6 +11,8 @@ $theme-colors: (
   "light":      $light,
   "dark":       $dark
 );
+
+$main-color: $white;
 
 .logIn{
     &-container{
@@ -80,10 +83,6 @@ body {
     height: 100vh;
 }
 
-.schedule-card {
-    width: 100%;
-}
-
 .ta-center {
     text-align: center;
 }
@@ -102,11 +101,25 @@ body {
 }
 
 .btn-time{
-    background-color: #fff;
-    border: $gray-300 solid 1px
+    background-color: $main-color;
+    border: $gray-300 solid 1px;
 }
 
 .btn-time:disabled{
     background-color: $gray-300;
-    border: $gray-400 solid 1px
+    border: $gray-400 solid 1px;
+    color: #000;
+}
+
+.btn-time-error {
+    border: $danger solid 1px;
+}
+
+.settings-bg{
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    left: 0;
+    top: 0;
+    z-index: 900;
 }

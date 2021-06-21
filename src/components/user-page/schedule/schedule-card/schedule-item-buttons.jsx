@@ -1,17 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { BucketSVG, PencilSVG, CheckSVG, XSVG } from '@/components/features/icons.jsx';
 
-const ScheduleItemButtons = ({ isСhanging, cancelChanging, name, toggleChanging }) => {
+const ScheduleItemButtons = ({ isСhanging, cancelChanging, name, toggleChanging, onDelete, isLoading }) => {
     return (
         <>
             {isСhanging ?
                 <>
                     <button className='btn btn-outline-success'
+                        disabled={isLoading}
                         type='submit'
                         aria-label='Сохранить изменения'>
                         <CheckSVG />
                     </button>
                     <button className='btn btn-outline-secondary'
+                        disabled={isLoading}
                         type='button'
                         aria-label='Отменить изменения'
                         onClick={cancelChanging}>
@@ -20,6 +23,7 @@ const ScheduleItemButtons = ({ isСhanging, cancelChanging, name, toggleChanging
                 </>
                 :
                 <button className='btn btn-outline-secondary'
+                    disabled={isLoading}
                     type='button'
                     aria-label={'Изменить активность ' + name}
                     onClick={() => { toggleChanging(true) }}>
@@ -27,7 +31,8 @@ const ScheduleItemButtons = ({ isСhanging, cancelChanging, name, toggleChanging
                 </button>
             }
             <button className='btn btn-outline-danger'
-                //onClick={onDelete}
+                disabled={isLoading}
+                onClick={onDelete}
                 type='button'
                 aria-label={'Удалить активность ' + name}>
                 <BucketSVG />
@@ -36,4 +41,9 @@ const ScheduleItemButtons = ({ isСhanging, cancelChanging, name, toggleChanging
     )
 }
 
-export default ScheduleItemButtons;
+export default connect(
+    state => ({
+        isLoading: state.scheduleState.isLoading.update,
+    }),
+    dispatch => ({})
+)(ScheduleItemButtons);
