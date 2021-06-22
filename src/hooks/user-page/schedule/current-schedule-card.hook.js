@@ -12,7 +12,6 @@ const useCurrentSchedule = (scheduleState) => {
     }, [scheduleState]);
 
     const checkData = () => {
-        console.log('check')
         let currentDay;
         let now = Date.now();
         if (scheduleState) {
@@ -20,7 +19,7 @@ const useCurrentSchedule = (scheduleState) => {
                 return i.date === new Date().setHours(0, 0, 0, 0).toString();
             })
         }
-        if (currentDay && currentDay.schedule) {
+        if (currentDay && currentDay.schedule && currentDay.schedule.length) {
             let newData = currentDay.schedule.find(i => {
                 return i.a <= now && i.b > now
             })
@@ -32,7 +31,11 @@ const useCurrentSchedule = (scheduleState) => {
                     if ((current.a > now) || (data.a > current.a)) {
                         return current
                     }
+                    return data
                 })
+                if (nextData.a < now) {
+                    nextData = null
+                }
                 setData(null)
                 if (nextData) {
                     timer.current = setTimeout(checkData, nextData.a - now + 10)
