@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { checkError } from '@/features/check-error.js';
 import { Link } from 'react-router-dom';
 import { useLogin } from '@/hooks/login-menu/login.hook.js';
 
@@ -19,14 +20,6 @@ const Login = () => {
     const onSubmit = (event) => {
         event.preventDefault();
         request();
-    }
-
-    const checkError = (error) => {
-        if (error) {
-            return 'is-invalid'
-        } else {
-            return ''
-        }
     }
 
     return (
@@ -95,6 +88,7 @@ const Login = () => {
                     </Link>
                 </div>
                 <button
+                    aria-disabled={isLoading}
                     disabled={isLoading}
                     type='submit'
                     className='btn btn-outline-primary w-100'

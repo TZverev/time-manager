@@ -1,0 +1,47 @@
+@import '@/styles/scss/styles.scss';
+
+
+.circle-wrapper-lc{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    background-color: $gray-200;
+    border-radius: 50%;
+}
+
+.left-half-lc{
+    border-radius: 150px 0 0 150px  ;
+    transform-origin: center right;
+    transition: all .5s;
+}
+
+.circle-size-lc{
+    height: 100%;
+    width: 50%;
+    position: absolute;
+}
+
+.mask-lc {
+    background-color: $gray-200;
+    z-index: 10;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+}
+
+.circle-center-lc{
+    background-color:$main-color;
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    left: 12.5%;
+    top: 12.5%;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: solid $gray-300 2px;
+}

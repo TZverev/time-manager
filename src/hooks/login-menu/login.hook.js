@@ -34,9 +34,7 @@ export const useLogin = () => {
 
         setIsLoading(true);
         try {
-            const userCredential = await loginUser(form.email, form.password);
-            console.log(userCredential.user)
-            setIsLoading(false);
+            await loginUser(form.email, form.password);
         } catch (error) {
             let err = errorInfo(error);
             if (err.type === 'passError') {

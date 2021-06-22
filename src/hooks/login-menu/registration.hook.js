@@ -59,9 +59,7 @@ export const useRegistration = () => {
         }
         setIsLoading(true);
         try {
-            const userCredential = await createUser(email, passwords.firstPassInput)
-            console.log(userCredential.user);
-            setIsLoading(false);
+            await createUser(email, passwords.firstPassInput)
         } catch (error) {
             let err = errorInfo(error);
             if (err.type === 'emailError') {

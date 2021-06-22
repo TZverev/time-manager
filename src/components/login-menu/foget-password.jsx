@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { usefogetPassword } from '@/hooks/login-menu/fogetPassword.hook.js';
+import { checkError } from '@/features/check-error.js';
 
 const FogetPassword = () => {
     const {
@@ -16,14 +17,6 @@ const FogetPassword = () => {
     const onSubmit = (event) => {
         event.preventDefault();
         request(() => { setIsMessageShown(true) });
-    }
-
-    const checkError = (error) => {
-        if (error) {
-            return 'is-invalid'
-        } else {
-            return ''
-        }
     }
 
     return (
@@ -65,6 +58,7 @@ const FogetPassword = () => {
                         </div>
                     </div>
                     <button
+                        aria-disabled={isLoading}
                         disabled={isLoading}
                         type='submit'
                         className='btn btn-outline-primary w-100'>

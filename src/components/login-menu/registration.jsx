@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRegistration } from '@/hooks/login-menu/registration.hook';
+import { checkError } from '@/features/check-error.js';
 
 
 const Registration = () => {
@@ -16,14 +17,6 @@ const Registration = () => {
         changeEmailHandler,
         request,
     } = useRegistration();
-
-    const checkError = (error) => {
-        if (error) {
-            return 'is-invalid'
-        } else {
-            return ''
-        }
-    }
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -120,6 +113,7 @@ const Registration = () => {
                 </div>
                 <div className='mt-3'>
                     <button
+                        aria-disabled={isLoading}
                         disabled={isLoading}
                         type='submit'
                         className='btn btn-outline-primary w-100'
